@@ -31,7 +31,7 @@ def runFromHosts():
             if status==0:
                 print "Success: "+hlist[i]
             else:
-                print "Failed: " +hlist[i]+"'s returncode = "+str(status)
+                print "Failed : " +hlist[i]+"'s returncode = "+str(status)
             finish.add(i)
     endtime = time.clock()
     print "runtime: "+ str(endtime-starttime)
