@@ -1,9 +1,6 @@
 #!/usr/bin/env python
-import subprocess
-import re
-import os,sys
-import time
-#cmd='uptime'
+import os,sys,re,time,subprocess
+import paramiko
 def runFromHosts():
     hostFile=open('hosts','r')
     re_obj=re.compile(r"\s")
@@ -14,15 +11,13 @@ def runFromHosts():
     cmd=sys.argv[1]
     for line in hostFile.readlines():
         host=re_obj.split(line)[0]
-#        process=subprocess.Popen("python sshrun.py -h"+ host+" -c \'"+cmd+"\'",stdout=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
-        process=subprocess.Popen("python sshrun.py -h"+ host+" -c \'"+cmd+"\'",stdout=open('stdout.log','aw'),stderr=open("stderr.log",'aw'),shell=True)
-#        process=subprocess.Popen("python sshrun.py -h"+ host+" -c \'"+cmd+"\'",shell=True,close_fds=True)
-#        process=subprocess.Popen("python test.py",stdout=open("stdout.log",'w'),stderr=open("stderr.log",'w'),shell=True)
-        hlist.append(host)
+        homePath=sys.argv[1]
+        remotePath=sys.argv[2]
+        cmd="scp "+homePath+" "+host+":"+remotePath
+        process=subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
         list.append(process)
-#        stdout,stderr=process.communicate()
-#        print re_obj.split(line)[0]+": "+ str(status)
-    
+        hlist.append(host)
+
     while len(finish)!=len(list):
         for i in range(len(list)):
             status=list[i].poll()
@@ -35,5 +30,10 @@ def runFromHosts():
             finish.add(i)
     endtime = time.clock()
     print "runtime: "+ str(endtime-starttime)
+def usage():
+    print "usage:\"./pscp.py homePath remotePath\""
 if __name__=='__main__':
-    runFromHosts()
+    if len(sys.argv)<3:
+        usage()
+    else:
+        runFromHosts()    
