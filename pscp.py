@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import os,sys,re,time,subprocess
-import paramiko
 def runFromHosts():
     hostFile=open('hosts','r')
     re_obj=re.compile(r"\s")
@@ -13,7 +12,10 @@ def runFromHosts():
         host=re_obj.split(line)[0]
         homePath=sys.argv[1]
         remotePath=sys.argv[2]
-        cmd="scp "+homePath+" "+host+":"+remotePath
+        if os.path.isdir(homePath)==True:
+            cmd="scp -r "+homePath+" "+host+":"+remotePath
+        else:
+            cmd="scp "+homePath+" "+host+":"+remotePath
         process=subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
         list.append(process)
         hlist.append(host)

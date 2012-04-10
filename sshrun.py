@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import paramiko
+#import paramiko
 import os
 import sys
 import getpass
@@ -54,7 +54,7 @@ def main(argv):
         sys.exit(2)
 #    output=None
 #    verbose=False
-    mode='k'
+    mode='s'
     port=22
     user=None
     for o,a in opts:
