@@ -17,10 +17,10 @@ def main(argv):
     if os.path.isfile(input):
         os.system(nccopy+" "+args+" "+input+" "+output)
         sys.exit(0);
-    if os.path.exists(output):
-        print "output directory:"+output+" exists"
-        sys.exit(1)
-    else:
+    if not os.path.exists(output):
+#        print "output directory:"+output+" exists"
+#        sys.exit(1)
+#    else:
         os.mkdir(output)
     flist=[]
     list=[]
