@@ -11,7 +11,7 @@ def runFromHosts():
     hlist=[]
     finish=set()
     starttime=time.clock()
-    cmd=sys.argv[1]
+    cmd=" ".join(sys.argv[1:])
     for line in hostFile.readlines():
         host=re_obj.split(line)[0]
 #        process=subprocess.Popen("python sshrun.py -h"+ host+" -c \'"+cmd+"\'",stdout=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
